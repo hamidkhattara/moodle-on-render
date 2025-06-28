@@ -18,7 +18,6 @@ $CFG->dboptions = array (
 );
 
 $CFG->wwwroot   = 'https://moodle-web-suc9.onrender.com';
-$CFG->dataroot  = '/opt/bitnami/moodledata';
 $CFG->admin     = 'admin';
 
 $CFG->directorypermissions = 02777;
