@@ -1,9 +1,7 @@
 # Ignore everything
 *
 
-# But NOT these:
+# But NOT these files:
 !Dockerfile
 !docker-compose.yml
-!install.sh
 !.gitignore
-!config.php  # 👈 ADD THIS LINE
