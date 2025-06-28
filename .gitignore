@@ -1,7 +1,8 @@
 # Ignore everything
 *
 
-# But NOT these files:
+# But NOT these:
 !Dockerfile
 !docker-compose.yml
+!install.sh
 !.gitignore
