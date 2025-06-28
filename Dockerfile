@@ -1,5 +1,5 @@
 FROM bitnami/moodle:latest
 
-COPY config.php /opt/bitnami/moodle/config.php
+# Don't copy config.php — let Moodle generate it from env vars
 COPY install.sh /install.sh
 RUN chmod +x /install.sh
