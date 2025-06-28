@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -f /opt/bitnami/apache/conf/vhosts/moodle-https-vhost.conf
+
 echo "⚙️ Starting Moodle install script..."
 
 # Wait for the PostgreSQL database to be ready
