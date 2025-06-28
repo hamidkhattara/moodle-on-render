@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_DB: moodle
+      POSTGRES_USER: moodleuser
+      POSTGRES_PASSWORD: moodlepass
+    volumes:
+      - moodle-db-data:/var/lib/postgresql/data
+
+  moodle:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      MOODLE_DATABASE_TYPE: pgsql
+      MOODLE_DATABASE_HOST: db
+      MOODLE_DATABASE_PORT_NUMBER: 5432
+      MOODLE_DATABASE_NAME: moodle
+      MOODLE_DATABASE_USER: moodleuser
+      MOODLE_DATABASE_PASSWORD: moodlepass
+      MOODLE_URL: https://moodle-web-suc9.onrender.com
+    depends_on:
+      - db
+    volumes:
+      - moodle-data:/bitnami/moodle
+      - moodle-app-data:/bitnami/moodledata
+
+volumes:
+  moodle-db-data:
+  moodle-data:
+  moodle-app-data:
