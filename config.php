@@ -1,4 +1,5 @@
-<?php  // config.php
+<?php  // Moodle configuration file
+
 unset($CFG);
 global $CFG;
 $CFG = new stdClass();
@@ -12,15 +13,14 @@ $CFG->dbpass    = 'CshKcXRJgZrKTcXLz2cFwfTkg9ohpd39';
 $CFG->prefix    = 'mdl_';
 $CFG->dboptions = array (
   'dbpersist' => 0,
-  'dbport' => 5432,
+  'dbport' => '5432',
   'dbsocket' => '',
-  'dbcollation' => 'utf8mb4_general_ci',
 );
 
 $CFG->wwwroot   = 'https://moodle-web-suc9.onrender.com';
-$CFG->dataroot  = '/bitnami/moodledata';
+$CFG->dataroot  = '/opt/bitnami/moodledata';
 $CFG->admin     = 'admin';
 
-$CFG->directorypermissions = 0777;
+$CFG->directorypermissions = 02777;
 
-require_once(__DIR__ . '/lib/setup.php');    
+require_once(__DIR__ . '/lib/setup.php');
