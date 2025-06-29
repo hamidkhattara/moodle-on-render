@@ -1,18 +1,26 @@
-version: '3.7'
+version: '3.8'
+
+name: moodle-prod
 
 services:
   db:
     image: postgres:13
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_DB: moodle
       POSTGRES_USER: moodleuser
       POSTGRES_PASSWORD: moodlepass
     volumes:
       - moodle-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U moodleuser"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   moodle:
-    build: .
+    image: bitnami/moodle:latest
+    restart: unless-stopped
     ports:
       - "8080:8080"
     environment:
@@ -22,14 +30,24 @@ services:
       MOODLE_DATABASE_NAME: moodle
       MOODLE_DATABASE_USER: moodleuser
       MOODLE_DATABASE_PASSWORD: moodlepass
-      MOODLE_URL: https://moodle-web-suc9.onrender.com
-    depends_on:
-      - db
+      MOODLE_USERNAME: admin
+      MOODLE_PASSWORD: admin123
+      MOODLE_EMAIL: admin@irtuniv.dz
+      MOODLE_URL: https://your-domain.com  # Change this to your real domain
+      PHP_FPM_ENABLE: yes  # Prevent Apache hangs
     volumes:
-      - moodle-data:/bitnami/moodle
-      - moodle-app-data:/bitnami/moodledata
+      - moodle-app:/bitnami/moodle
+      - moodle-data:/bitnami/moodledata
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/login/index.php || exit 1"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
 
 volumes:
   moodle-db-data:
+  moodle-app:
   moodle-data:
-  moodle-app-data:
